@@ -11,8 +11,14 @@ const App = () => {
   const [doneTodos, setDoneTodos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoData, setTodoData] = useState({
-    answer: "",
     questionNumber: "",
+    answer: "",
+    question1: "",
+    question2: "",
+    question3: "",
+    question4: "",
+    question5: "",
+    question6: "",
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [searchDoneTerm, setSearchDoneTerm] = useState("");
@@ -60,7 +66,16 @@ const App = () => {
       message.success("Yangi To-do muvaffaqiyatli qo'shildi");
       setTodos((prevTodos) => [...prevTodos, response.data]); // Optimistic UI update
       setIsModalOpen(false);
-      setTodoData({ answer: "", questionNumber: "" });
+      setTodoData({
+        answer: "",
+        questionNumber: "",
+        question1: "",
+        question2: "",
+        question3: "",
+        question4: "",
+        question5: "",
+        question6: "",
+      });
     } catch (error) {
       message.error("Saqlashda xatolik yuz berdi");
     }
@@ -87,7 +102,13 @@ const App = () => {
     try {
       await axios.post("https://c37ebab283094df7.mokky.dev/done", {
         answer: todo.answer,
-        questionNumber: todo.questionNumber, // Include questionNumber in the payload
+        questionNumber: todo.questionNumber,
+        question1: todo.question1,
+        question2: todo.question2,
+        question3: todo.question3,
+        question4: todo.question4,
+        question5: todo.question5,
+        question6: todo.question6,
         archived: true,
       });
       await axios.delete(`https://c37ebab283094df7.mokky.dev/api/${todo.id}`);
@@ -97,19 +118,6 @@ const App = () => {
     } catch (error) {
       message.error("Savolni qo'shishda xatolik yuz berdi");
     }
-  };
-
-  const formatTextWithColor = (text) => {
-    const regex = /\*(.*?)\*/g;
-    return text.split(regex).map((part, index) =>
-      index % 2 === 1 ? (
-        <span className="colod" key={index}>
-          {part}
-        </span>
-      ) : (
-        part
-      )
-    );
   };
 
   const filteredTodos = todos.filter((todo) =>
@@ -148,8 +156,10 @@ const App = () => {
                 <div className="flex items-start">
                   <div className="text-lg text-gray-300 flex-1">
                     <h1>
-                      <span className=" text-yellow-600 font-bold">:</span>
-                      {todo.questionNumber} {todo.question}
+                      <span className="text-yellow-400/100 font-semibold">
+                        #
+                      </span>
+                      {todo.questionNumber}
                     </h1>
                     <hr
                       style={{
@@ -158,8 +168,83 @@ const App = () => {
                         borderColor: "aqua",
                       }}
                     />
-                    <p>{formatTextWithColor(todo.answer)}</p>
+
+                    <button className=" flex items-center gap-2">
+                      <span>
+                        <span className="text-yellow-400/100 font-semibold">
+                          1 :
+                        </span>
+                      </span>
+                      <p>{todo.answer}</p>
+                    </button>
+
+                    {todo.question1 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            2 :
+                          </span>
+                        </span>
+                        <p>{todo.question1}</p>
+                      </button>
+                    )}
+
+                    {todo.question2 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            3 :
+                          </span>
+                        </span>
+                        <p>{todo.question2}</p>
+                      </button>
+                    )}
+
+                    {todo.question3 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            4 :
+                          </span>
+                        </span>
+                        <p>{todo.question3}</p>
+                      </button>
+                    )}
+
+                    {todo.question4 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            5 :
+                          </span>
+                        </span>
+                        <p>{todo.question4}</p>
+                      </button>
+                    )}
+
+                    {todo.question5 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            6 :
+                          </span>
+                        </span>
+                        <p>{todo.question5}</p>
+                      </button>
+                    )}
+
+                    {todo.question6 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            7 :
+                          </span>
+                        </span>
+                        <p>{todo.question6}</p>
+                      </button>
+                    )}
                   </div>
+
                   <div className="flex flex-col items-center gap-2">
                     <button
                       aria-label="Mark as completed"
@@ -194,9 +279,12 @@ const App = () => {
                 className="flex flex-col justify-between p-5 rounded-lg shadow-md bg-gray-700 hover:bg-gray-600 transition duration-300"
               >
                 <div className="flex items-start">
-                  <div className="text-lg text-gray-400 flex-1">
+                  <div className="text-lg text-gray-300 flex-1">
                     <h1>
-                      #{todo.questionNumber} {todo.question}
+                      <span className="text-yellow-400/100 font-semibold">
+                        #
+                      </span>
+                      {todo.questionNumber}
                     </h1>
                     <hr
                       style={{
@@ -205,7 +293,81 @@ const App = () => {
                         borderColor: "aqua",
                       }}
                     />
-                    <p>{formatTextWithColor(todo.answer)}</p>
+
+                    <button className=" flex items-center gap-2">
+                      <span>
+                        <span className="text-yellow-400/100 font-semibold">
+                          1 :
+                        </span>
+                      </span>
+                      <p>{todo.answer}</p>
+                    </button>
+
+                    {todo.question1 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            2 :
+                          </span>
+                        </span>
+                        <p>{todo.question1}</p>
+                      </button>
+                    )}
+
+                    {todo.question2 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            3 :
+                          </span>
+                        </span>
+                        <p>{todo.question2}</p>
+                      </button>
+                    )}
+
+                    {todo.question3 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            4 :
+                          </span>
+                        </span>
+                        <p>{todo.question3}</p>
+                      </button>
+                    )}
+
+                    {todo.question4 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            5 :
+                          </span>
+                        </span>
+                        <p>{todo.question4}</p>
+                      </button>
+                    )}
+
+                    {todo.question5 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            6 :
+                          </span>
+                        </span>
+                        <p>{todo.question5}</p>
+                      </button>
+                    )}
+
+                    {todo.question6 && (
+                      <button className=" flex items-center gap-2">
+                        <span>
+                          <span className="text-yellow-400/100 font-semibold">
+                            7 :
+                          </span>
+                        </span>
+                        <p>{todo.question6}</p>
+                      </button>
+                    )}
                   </div>
                   <button
                     aria-label="Delete learned question"
@@ -230,20 +392,69 @@ const App = () => {
         cancelText="Bekor qilish"
       >
         <div className="space-y-4">
-          <TextArea
-            value={todoData.answer}
-            onChange={(e) =>
-              setTodoData({ ...todoData, answer: e.target.value })
-            }
-            placeholder=" Add palan name"
-            rows={4}
-          />
           <Input
             value={todoData.questionNumber}
             onChange={(e) =>
               setTodoData({ ...todoData, questionNumber: e.target.value })
             }
             placeholder="Date"
+            type="text"
+          />
+          <Input
+            value={todoData.answer}
+            onChange={(e) =>
+              setTodoData({ ...todoData, answer: e.target.value })
+            }
+            placeholder="Add plan 1"
+            type="text"
+          />
+          <Input
+            value={todoData.question1}
+            onChange={(e) =>
+              setTodoData({ ...todoData, question1: e.target.value })
+            }
+            placeholder="Add plan 2"
+            type="text"
+          />
+          <Input
+            value={todoData.question2}
+            onChange={(e) =>
+              setTodoData({ ...todoData, question2: e.target.value })
+            }
+            placeholder="Add plan 3"
+            type="text"
+          />
+          <Input
+            value={todoData.question3}
+            onChange={(e) =>
+              setTodoData({ ...todoData, question3: e.target.value })
+            }
+            placeholder="Add plan 4"
+            type="text"
+          />
+          <Input
+            value={todoData.question4}
+            onChange={(e) =>
+              setTodoData({ ...todoData, question4: e.target.value })
+            }
+            placeholder="Add plan 5"
+            type="text"
+          />
+          <Input
+            value={todoData.question5}
+            onChange={(e) =>
+              setTodoData({ ...todoData, question5: e.target.value })
+            }
+            placeholder="Add plan 6"
+            type="text"
+          />
+
+          <Input
+            value={todoData.question6}
+            onChange={(e) =>
+              setTodoData({ ...todoData, question6: e.target.value })
+            }
+            placeholder="Add plan 7"
             type="text"
           />
         </div>
