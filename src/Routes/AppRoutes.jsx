@@ -13,7 +13,7 @@ import BlogV1 from "../pages/Blog/BlogV1";
 import BlogV2 from "../pages/Blog/BlogV2";
 import Faqs from "../pages/Others/Faqs";
 
-export const Router = createBrowserRouter([
+const Router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
@@ -68,7 +68,7 @@ export const Router = createBrowserRouter([
       },
       {
         path: "faqssPage",
-        element: <Faqs/>,
+        element: <Faqs />,
       },
       {
         path: "loanCalculator",
@@ -103,3 +103,5 @@ export const Router = createBrowserRouter([
     ],
   },
 ]);
+
+export default Router;
