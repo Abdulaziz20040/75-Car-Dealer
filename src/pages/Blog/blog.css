@@ -1,0 +1,7 @@
+/* Active sahifaning fonini qora qilish */
+.ant-pagination-item-active {
+  background-color: black !important;
+  border-color: black !important; /* Agar chekkasi ham qora bo'lishini xohlasangiz */
+  color: white !important; /* Matn rangini kontrastli qilib qo'ying */
+  border-radius: 50% !important;
+}
