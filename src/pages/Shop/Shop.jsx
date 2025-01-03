@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Slider, Spin, Select, Pagination } from "antd";
 import { GoArrowUpRight } from "react-icons/go";
-import "../../styles/App.css";
+import "../../App.css";
 
 const { Option } = Select;
 

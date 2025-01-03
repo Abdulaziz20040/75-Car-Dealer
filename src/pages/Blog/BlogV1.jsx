@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pagination, Select } from "antd";
-import "../../styles/App.css";
+import "../../App.css";
 
 function BlogV1() {
   const [cards, setCards] = useState([]); // Cards array

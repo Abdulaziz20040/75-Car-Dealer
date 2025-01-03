@@ -3,7 +3,7 @@ import axios from "axios";
 import { GoArrowUpRight } from "react-icons/go";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { MdOutlineSpeed } from "react-icons/md";
-import { TbAutomaticGearboxFilled } from "react-icons/tb";
+
 import { Pagination, Select } from "antd";
 
 const { Option } = Select;
@@ -108,7 +108,6 @@ function ListV1() {
                   <span>{card.fuel || "Petrol"}</span>
                 </button>
                 <button className="flex flex-col items-center justify-center">
-                  <TbAutomaticGearboxFilled className="text-xl" />
                   <span>{card.transmission || "Automatic"}</span>
                 </button>
               </div>
