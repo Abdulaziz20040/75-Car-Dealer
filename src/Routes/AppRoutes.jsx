@@ -12,6 +12,8 @@ import RootLayout from "../Layouts/RootLayout";
 import BlogV1 from "../pages/Blog/BlogV1";
 import BlogV2 from "../pages/Blog/BlogV2";
 import Faqs from "../pages/Others/Faqs";
+import Profil from "../pages/Profil/Profil";
+import DetailsV1 from "../pages/Details/DetailsV1";
 
 const Router = createBrowserRouter([
   {
@@ -31,14 +33,17 @@ const Router = createBrowserRouter([
         element: <Home1 />,
       },
 
+      // details
+
+      {
+        path: "details/:id",
+        element: <DetailsV1 />,
+      },
+
       // Listings1
 
       {
         path: "Listings",
-        element: <ListV1 />,
-      },
-      {
-        path: "Listings1",
         element: <ListV1 />,
       },
 
@@ -82,6 +87,12 @@ const Router = createBrowserRouter([
         path: "servicesPage",
         element: <Services />,
       },
+
+      {
+        path: "profile",
+        element: <Profil />,
+      },
+
       // others
 
       {

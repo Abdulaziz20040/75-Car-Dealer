@@ -3,6 +3,7 @@ import axios from "axios";
 import { Slider, Spin, Select, Pagination } from "antd";
 import { GoArrowUpRight } from "react-icons/go";
 import "../../App.css";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -148,10 +149,12 @@ const Shop = () => {
                       <span className="text-gray-700 font-semibold">
                         ${product.price || "999.99"}
                       </span>
-                      <button className="text-blue-500 flex items-center gap-1 hover:underline">
-                        View Details
-                        <GoArrowUpRight className="text-xl" />
-                      </button>
+                      <Link to={`/details/${product.id}`}>
+                        <button className="text-blue-500 flex items-center gap-1 hover:underline">
+                          View Details
+                          <GoArrowUpRight className="text-xl" />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Home() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className=" container mt-10">
       Home <br />

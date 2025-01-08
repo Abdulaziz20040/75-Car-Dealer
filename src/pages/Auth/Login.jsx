@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +12,8 @@ const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
   const [open, setopen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsRegister(!isRegister);
@@ -28,7 +31,6 @@ const Login = () => {
       setError("Ro‘yxatdan o‘tish uchun barcha maydonlarni to‘ldiring.");
       return;
     }
-
     const userData = { firstName, lastName, email, password, phone };
 
     try {
@@ -77,12 +79,18 @@ const Login = () => {
       const token = data?.data?.Authorize;
       if (token) {
         localStorage.setItem("authToken", token);
-        alert("Kirish muvaffaqiyatli amalga oshirildi!");
+        localStorage.setItem("email", email),
+          localStorage.setItem("lastName", lastName);
+        localStorage.setItem("firstName", firstName);
+        localStorage.setItem("phone", phone);
+        navigate(-1);
       }
     } catch (error) {
       setError(error.message);
     }
   };
+
+  //
 
   return (
     <div className="flex items-center justify-center min-h-screen">

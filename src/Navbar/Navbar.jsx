@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
+import { FaCaretDown } from "react-icons/fa";
 
 const { Option } = Select;
 
 function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // LocalStorage'dan emailni o'qish
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      setIsLoggedIn(true); // Login holatini yangilash
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   // Handle category change
@@ -29,36 +40,25 @@ function Navbar() {
 
         {/* Menu Items */}
         <div className="hidden md:flex space-x-6">
-          {/* Home Select */}
-          <Select
-            onChange={handleCategoryChange}
-            defaultValue="Home"
-            className="w-auto"
-            variant="outlined" // "bordered" -> "variant"
-            dropdownStyle={{ zIndex: 1050 }}
-          >
-            <Option value="Home-1">Home</Option>
-          </Select>
+          <Link to={"/Home-1"}>
+            <h1>Home</h1>
+          </Link>
 
-          {/* Listings Select */}
-          <Select
-            onChange={handleCategoryChange}
-            defaultValue="Listings"
-            className="w-auto"
-            variant="outlined" // "bordered" -> "variant"
-            dropdownStyle={{ zIndex: 1050 }}
-          >
-            <Option value="Listings">Listings</Option>
-            <Option value="Listings1">List v1</Option>
-          </Select>
-
+          <Link to={"/Listings"}>
+            <h1>Listings</h1>
+          </Link>
           {/* Blog Select */}
           <Select
             onChange={handleCategoryChange}
-            defaultValue="blog"
-            className="w-auto"
-            variant="outlined" // "bordered" -> "variant"
+            defaultValue="blog-v1"
+            className="text-center"
+            bordered={false} // Ant Design xususiyati bilan borderni o'chiramiz
             dropdownStyle={{ zIndex: 1050 }}
+            style={{
+              boxShadow: "none", // Shadowni o'chiramiz
+              backgroundColor: "transparent", // Orqa fonni shaffof qilish
+              padding: 0,
+            }}
           >
             <Option value="blog">Blog</Option>
             <Option value="blog-v1">Blog v1</Option>
@@ -68,10 +68,15 @@ function Navbar() {
           {/* Pages Select */}
           <Select
             onChange={handleCategoryChange}
-            defaultValue="pags"
-            className="w-auto"
-            variant="outlined" // "bordered" -> "variant"
+            defaultValue="blog-v1"
+            className="text-center"
+            bordered={false} // Ant Design xususiyati bilan borderni o'chiramiz
             dropdownStyle={{ zIndex: 1050 }}
+            style={{
+              boxShadow: "none", // Shadowni o'chiramiz
+              backgroundColor: "transparent", // Orqa fonni shaffof qilish
+              padding: 0,
+            }}
           >
             <Option value="pags">Pages</Option>
             <Option value="ShopPage">Shop Page</Option>
@@ -92,11 +97,19 @@ function Navbar() {
               Contact
             </button>
           </Link>
-          <Link to="/signin">
-            <button className="text-gray-800 flex gap-2 items-center hover:text-indigo-500">
-              <CiUser /> Sign In
-            </button>
-          </Link>
+          {isLoggedIn ? (
+            <Link to="/profile">
+              <button className="text-gray-800 flex gap-2 items-center hover:text-indigo-500">
+                <CiUser /> Profile
+              </button>
+            </Link>
+          ) : (
+            <Link to="/signin">
+              <button className="text-gray-800 flex gap-2 items-center hover:text-indigo-500">
+                <CiUser /> Sign In
+              </button>
+            </Link>
+          )}
           <Link to="/Listings1">
             <button className="bg-white px-4 py-2 rounded-xl border border-black">
               Submit Listing

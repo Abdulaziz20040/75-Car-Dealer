@@ -5,6 +5,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { MdOutlineSpeed } from "react-icons/md";
 
 import { Pagination, Select } from "antd";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -120,10 +121,12 @@ function ListV1() {
                 <span className="text-gray-700 font-semibold">
                   ${card.price || "999.99"}
                 </span>
-                <button className="text-blue-500 flex items-center gap-1 hover:underline">
-                  View Details
-                  <GoArrowUpRight className="text-xl" />
-                </button>
+                <Link to={`/details/${card.id}`}>
+                  <button className="text-blue-500 flex items-center gap-1 hover:underline">
+                    View Details
+                    <GoArrowUpRight className="text-xl" />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
