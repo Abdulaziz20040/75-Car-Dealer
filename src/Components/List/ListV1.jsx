@@ -20,7 +20,7 @@ function ListV1() {
       .get("http://10.10.3.9:8080/car-dealer/list/getAll")
       .then((response) => {
         if (response.data.success) {
-          setCards(response.data.data); // Access the 'data' array from the response
+          setCards(response.data.data.announcement); // Access the 'data' array from the response
         } else {
           console.error("API response unsuccessful:", response.data.message);
         }
