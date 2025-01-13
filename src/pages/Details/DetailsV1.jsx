@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { CiBookmark, CiSaveUp2 } from "react-icons/ci";
-import { useParams } from "react-router-dom";
-import img2 from "./default2.jpeg";
+import { data, useParams } from "react-router-dom";
 import { SlLocationPin } from "react-icons/sl";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
-
+import { IoCarSportOutline } from "react-icons/io5";
+import { MdOutlineSpeed } from "react-icons/md";
+import { CiUser } from "react-icons/ci";
+import { PiEngineBold } from "react-icons/pi";
+import { BsFuelPump } from "react-icons/bs";
+import { GiCarDoor } from "react-icons/gi";
+import { FaRegCalendarDays } from "react-icons/fa6";
+import { TbVectorBezier2 } from "react-icons/tb";
+import { PiSteeringWheel } from "react-icons/pi";
+import { IoIosColorFill } from "react-icons/io";
+import Icon from "./Icon.png";
 const AnnouncementDetails = () => {
   const { id } = useParams(); // URL dan 'id' parametrini olish
   const [apiResponse, setApiResponse] = useState(null);
@@ -48,7 +57,7 @@ const AnnouncementDetails = () => {
     return <div>Loading...</div>;
   }
 
-  const { car, description, price, bookmarkedBy, savedBy } = apiResponse;
+  const { car, description, price, bookmarkedBy, savedBy, user } = apiResponse;
 
   // <div className=" mt-20">
   //   <h1>
@@ -130,12 +139,18 @@ const AnnouncementDetails = () => {
                 <p className="font-semibold text-3xl">$ 165,000</p>
               </div>
             </div>
-            <div className="w-[100%] h-[350px] p-5 border-2 mt-5 border-gray-[#E1E1E1] rounded-[20px] ">
-              <div className="w-24 h-24 border-2 border-gray-[#E9E9E9] p-1 flex justify-center items-center rounded-full">
-                <img src={img2} alt="" className="w-20 h-20 rounded-full" />
+            <div className="w-[100%] h-[285px] p-5 border-2 mt-5 border-gray-[#E1E1E1] rounded-[20px] ">
+              <div className="w-24 h-24 border-2 border-gray-[#E9E9E9] flex justify-center items-center rounded-full">
+                <img
+                  src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg="
+                  alt=""
+                  className="w-20 h-20 rounded-full"
+                />
               </div>
               <div className="mt-3">
-                <h3 className="text-[23px] font-semibold mb-2">user</h3>
+                <h3 className="text-[23px] font-semibold mb-2">
+                  {user.firstName}
+                </h3>
                 <p>943 Broadway, Brooklyn</p>
               </div>
               <div className="flex justify-between items-start mt-5">
@@ -149,7 +164,7 @@ const AnnouncementDetails = () => {
                   <span className="flex justify-center items-center w-[36px] h-[30px] text-[#405FF2] rounded-full bg-[#405FF21A]">
                     <MdOutlinePhoneInTalk />
                   </span>
-                  +88-123456789
+                  {user.phone}
                 </p>
               </div>
             </div>
@@ -164,51 +179,116 @@ const AnnouncementDetails = () => {
 
       {/* Car Overview */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-4">Car Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="text-gray-600">
-            Body: <span className="font-semibold">Sedan</span>
+        <h2 className="text-2xl font-semiBold mb-10">Car Overview</h2>
+        <div className="grid grid-cols-4 items-baseline">
+          <div className="grid grid-cols-1 gap-8 text-gray-600">
+            {/* Body */}
+            <div className="flex items-center gap-3">
+              <IoCarSportOutline className="text-gray-700" />
+              <span className="font-medium">Body</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CiUser className="text-gray-700" />
+              <span className="font-medium">Condition</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <MdOutlineSpeed className="text-gray-700" />
+              <span className="font-medium">Mileage</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <PiEngineBold className="text-gray-700" />
+              <span className="font-medium">Engine Size</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <BsFuelPump className="text-gray-700" />
+              <span className="font-medium">Fuel Type</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <GiCarDoor className="text-gray-700" />
+              <span className="font-medium">Door</span>
+            </div>
           </div>
-          <div className="text-gray-600">
-            Condition: <span className="font-semibold">New</span>
+
+          {/* Condition */}
+          <div className="grid grid-cols-1 gap-8 items-center">
+            <div>
+              <span className="font-semibold text-gray-900">{car.body}</span>
+            </div>
+
+            <div>
+              <span className="font-semibold text-gray-900">
+                {car.condition}
+              </span>
+            </div>
+
+            <div>
+              <span className="font-semibold text-gray-900">20</span>
+            </div>
+
+            <div>
+              <span className="font-semibold  text-gray-900">3.5</span>
+            </div>
+
+            <div>
+              <span className="font-semibold text-gray-900">Petrol</span>
+            </div>
+
+            <div>
+              <span className="font-semibold text-gray-900">4 Doors</span>
+            </div>
           </div>
-          <div className="text-gray-600">
-            Mileage: <span className="font-semibold">20</span>
+
+          {/* /////////////////////////////////////////// */}
+
+          <div className="grid grid-cols-1 gap-8 text-gray-600">
+            <div className="flex items-center gap-3 text-gray-600">
+              <FaRegCalendarDays /> Year
+            </div>
+            <div className="flex items-center gap-6 text-gray-600">
+              <div className="flex items-center gap-3">
+                <img src={Icon} alt="" /> Cylinder:
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-3">
+                <TbVectorBezier2 /> Transmission
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-3">
+                <PiSteeringWheel /> Color
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-3">
+                <IoIosColorFill /> Drive Type
+              </div>
+            </div>
           </div>
-          <div className="text-gray-600">
-            Engine Size: <span className="font-semibold">3.5</span>
-          </div>
-          <div className="text-gray-600">
-            Fuel Type: <span className="font-semibold">Petrol</span>
-          </div>
-          <div className="text-gray-600">
-            Door: <span className="font-semibold">4 Doors</span>
-          </div>
-          <div className="text-gray-600">
-            Year: <span className="font-semibold">2023</span>
-          </div>
-          <div className="text-gray-600">
-            Cylinder: <span className="font-semibold">12</span>
-          </div>
-          <div className="text-gray-600">
-            Transmission: <span className="font-semibold">Automatic</span>
-          </div>
-          <div className="text-gray-600">
-            Color: <span className="font-semibold">Black, Blue, White</span>
-          </div>
-          <div className="text-gray-600">
-            Drive Type:{" "}
-            <span className="font-semibold">All-Wheel Drive (AWD/4WD)</span>
-          </div>
-          <div className="text-gray-600">
-            VIN: <span className="font-semibold">MC8123818</span>
+
+          <div className="grid grid-cols-1 gap-8">
+            <div className="flex justify-start items-center">
+              <p className=" font-semibold ">Black, Blue, White</p>
+            </div>
+            <div className="flex justify-start">
+              <p className=" font-semibold ">All-Wheel Drive (AWD/4WD)</p>
+            </div>
+            <div className="flex justify-start items-center">
+              <p className=" font-semibold flex-col">Automatic</p>
+            </div>
+            <div className="flex justify-start items-center">
+              <p className=" font-semibold flex-col">Automatic</p>
+            </div>
+            <div className="flex justify-start items-center">
+              <p className=" font-semibold flex-col">2023</p>
+            </div>
           </div>
         </div>
       </div>
-
       {/* Description */}
     </div>
   );
 };
+//salom dunyo
 
 export default AnnouncementDetails;
