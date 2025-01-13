@@ -289,6 +289,5 @@ const AnnouncementDetails = () => {
     </div>
   );
 };
-//salom dunyo
 
 export default AnnouncementDetails;
