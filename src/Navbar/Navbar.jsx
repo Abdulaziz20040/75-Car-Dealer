@@ -84,6 +84,8 @@ function Navbar() {
             <Option value="loanCalculator">Loan Calculator</Option>
             <Option value="pricingPage">Pricing Page</Option>
             <Option value="ServicesPage">Services Page</Option>
+            <Option value="elon">E'lon</Option>
+            <Option value="createBlog">Create-Blog</Option>
           </Select>
 
           {/* Buttons */}
@@ -110,7 +112,8 @@ function Navbar() {
               </button>
             </Link>
           )}
-          <Link to="/Listings1">
+
+          <Link to="/createCartS">
             <button className="bg-white px-4 py-2 rounded-xl border border-black">
               Submit Listing
             </button>

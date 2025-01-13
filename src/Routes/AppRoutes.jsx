@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home1 from "../pages/Home/Home";
-import ListV1 from "../pages/List/ListV1";
+import ListV1 from "../Components/List/ListV1";
 import Shop from "../pages/Shop/Shop";
 import Loancalculator from "../pages/Others/Loancalculator";
 import Pricing from "../pages/Pricing/Pricing";
@@ -14,6 +14,10 @@ import BlogV2 from "../pages/Blog/BlogV2";
 import Faqs from "../pages/Others/Faqs";
 import Profil from "../pages/Profil/Profil";
 import DetailsV1 from "../pages/Details/DetailsV1";
+import CreateCartS from "../pages/CreateCart/CreateCartS";
+import Elon from "../pages/E_lon/E'lon";
+import ShoppCreate from "../pages/Shop/ShoppCreate";
+import CreateBlog from "../pages/Blog/CreateBlog";
 
 const Router = createBrowserRouter([
   {
@@ -110,6 +114,22 @@ const Router = createBrowserRouter([
       {
         path: "submitListing",
         element: <Login />,
+      },
+      {
+        path: "createCartS",
+        element: <CreateCartS />,
+      },
+      {
+        path: "elon",
+        element: <Elon />,
+      },
+      {
+        path: "shoppCreate",
+        element: <ShoppCreate />,
+      },
+      {
+        path: "createBlog",
+        element: <CreateBlog />,
       },
     ],
   },

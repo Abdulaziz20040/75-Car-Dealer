@@ -77,12 +77,12 @@ const Login = () => {
 
       const data = await response.json();
       const token = data?.data?.Authorize;
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("email", email),
+        localStorage.setItem("lastName", lastName);
+      localStorage.setItem("firstName", firstName);
+      localStorage.setItem("phone", phone);
       if (token) {
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("email", email),
-          localStorage.setItem("lastName", lastName);
-        localStorage.setItem("firstName", firstName);
-        localStorage.setItem("phone", phone);
         navigate(-1);
       }
     } catch (error) {
