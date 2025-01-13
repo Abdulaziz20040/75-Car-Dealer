@@ -3,9 +3,11 @@ import axios from "axios";
 import { GoArrowUpRight } from "react-icons/go";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { MdOutlineSpeed } from "react-icons/md";
+import { LiaGasPumpSolid } from "react-icons/lia";
 
 import { Pagination, Select } from "antd";
 import { Link } from "react-router-dom";
+import { TbManualGearbox } from "react-icons/tb";
 
 const { Option } = Select;
 
@@ -13,12 +15,15 @@ function ListV1() {
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(12);
-
   useEffect(() => {
     axios
-      .get("https://df2174b8e5e5a31d.mokky.dev/MEGA_news")
+      .get("http://10.10.3.9:8080/car-dealer/list/getAll")
       .then((response) => {
-        setCards(response.data);
+        if (response.data.success) {
+          setCards(response.data.data); // Access the 'data' array from the response
+        } else {
+          console.error("API response unsuccessful:", response.data.message);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -64,64 +69,63 @@ function ListV1() {
 
       {/* cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        {currentCards.map((card, index) => (
+        {currentCards.map((card) => (
           <div
-            key={index}
+            key={card.id}
             className="relative w-[300px] bg-white rounded-xl shadow-md flex flex-col"
           >
-            {/* Bookmark Icon and Great Price */}
             <div className="absolute top-4 flex justify-between w-full px-4">
               <button className="bg-green-600 text-white text-sm font-medium px-2 py-1 rounded-full shadow">
-                {card.badge || "Great Price"}
+                {card.attribute || "Great Price"}
               </button>
               <button className="bg-white rounded-full w-[30px] h-[30px] flex items-center justify-center shadow">
                 <IoBookmarkOutline className="text-gray-500 cursor-pointer" />
               </button>
             </div>
+            <Link to={`/details/${card.announcementId}`}>
+              <img
+                src={card.imageUrl || "https://via.placeholder.com/300"}
+                alt={`${card.brand} ${card.model}`}
+                className="w-full h-40 object-cover rounded-t-xl mb-4"
+              />
+            </Link>
 
-            {/* Image */}
-            <img
-              src={card.img || "https://via.placeholder.com/300"}
-              alt={card.title || "Product Image"}
-              className="w-full h-40 object-cover rounded-t-xl mb-4"
-            />
-
-            {/* Product Info */}
             <div className="px-5 pb-5">
               <h2 className="text-lg font-semibold mb-1 line-clamp-1">
-                {card.title || "Product Name"}
+                {`${card.brand} ${card.model}`}
               </h2>
               <p className="text-gray-600 mb-2 line-clamp-1">
-                {card.desc || "Product Description"}
+                {new Date(card.date)
+                  .toLocaleString("uz-UZ", { day: "numeric", month: "long" })
+                  .replace(/\s/g, " -")}
               </p>
 
-              {/* Horizontal Line */}
               <hr className="my-2" />
 
-              {/* Details */}
               <div className="flex justify-between text-sm text-gray-700 mb-2">
                 <button className="flex flex-col items-center justify-center">
                   <MdOutlineSpeed className="text-xl" />
-                  <span className="text-sm">{card.miles || "20 Miles"}</span>
+                  <span>{card.millage || "N/A"} Miles</span>
                 </button>
                 <button className="flex flex-col items-center justify-center">
-                  <MdOutlineSpeed className="text-xl" />
-                  <span>{card.fuel || "Petrol"}</span>
+                  <LiaGasPumpSolid className="text-xl" />
+                  <span>{card.fuel || "N/A"}</span>
                 </button>
                 <button className="flex flex-col items-center justify-center">
-                  <span>{card.transmission || "Automatic"}</span>
+                  <TbManualGearbox className="text-xl" />
+                  <span className="line-clamp-1">
+                    {card.transmission || "N/A"}
+                  </span>
                 </button>
               </div>
 
-              {/* Horizontal Line */}
               <hr className="my-2" />
 
-              {/* Price and View Details */}
               <div className="flex justify-between items-center">
                 <span className="text-gray-700 font-semibold">
-                  ${card.price || "999.99"}
+                  ${card.price || "0.00"}
                 </span>
-                <Link to={`/details/${card.id}`}>
+                <Link to={`/details/${card.announcementId}`}>
                   <button className="text-blue-500 flex items-center gap-1 hover:underline">
                     View Details
                     <GoArrowUpRight className="text-xl" />
