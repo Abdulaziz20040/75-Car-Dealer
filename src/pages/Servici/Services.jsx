@@ -30,7 +30,7 @@ function Services() {
   };
 
   return (
-    <div className=" container">
+    <div className="container mx-auto">
       <div className="bg-white mt-10">
         {/* Header Section */}
         <section className=" flex items-center justify-between">

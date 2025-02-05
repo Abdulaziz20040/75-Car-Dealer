@@ -15,7 +15,7 @@ function RootLayout() {
 
       {/* Asosiy kontent */}
       <div className="flex-1 bg-white w-full">
-        <main className="container mx-auto px-4 md:px-8 pt-6">
+        <main className=" mx-auto  pt-6">
           <Outlet />
         </main>
       </div>

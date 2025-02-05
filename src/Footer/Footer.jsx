@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { Button } from "antd";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
+import "./Footer.css";
 
 const Footer = () => {
   return (
@@ -117,16 +118,16 @@ const Footer = () => {
           <div className="text-center md:text-right">
             <h4 className="text-white font-semibold mb-4">Connect With Us</h4>
             <div className="flex justify-center md:justify-end gap-4 text-xl">
-              <a href="#" className="hover:text-white">
+              <a href="https://www.facebook.com/" className="hover:text-white">
                 <FaFacebookF />
               </a>
-              <a href="#" className="hover:text-white">
+              <a href="https://www.x.com/" className="hover:text-white">
                 <FaTwitter />
               </a>
-              <a href="#" className="hover:text-white">
+              <a href="https://www.instagram.com/" className="hover:text-white">
                 <FaInstagram />
               </a>
-              <a href="#" className="hover:text-white">
+              <a href="https://uz.linkedin.com/" className="hover:text-white">
                 <FaLinkedinIn />
               </a>
             </div>

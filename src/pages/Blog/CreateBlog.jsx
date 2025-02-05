@@ -78,7 +78,7 @@ function CreateBlog() {
   };
 
   return (
-    <div className="mt-16 mx-20">
+    <div className=" container mx-auto mt-16 mx-20">
       <h2 className="font-bold text-3xl mb-10">create blog</h2>
       <form onSubmit={handleSubmit}>
         {/* Brand */}
