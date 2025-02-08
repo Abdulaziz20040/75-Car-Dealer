@@ -150,3 +150,10 @@ button {
   background: #ffffff;
   border-radius: 50%;
 }
+
+label {
+  font-size: 17px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  font-weight: bold;
+}

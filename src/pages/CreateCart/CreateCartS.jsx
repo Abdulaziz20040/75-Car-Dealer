@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import CreatePage2 from "./CreatePage2";
 function CreateCartS() {
   // useState hooks
   const [model, setModel] = useState("");
@@ -64,7 +65,7 @@ function CreateCartS() {
   const onSubmit = (e) => {
     e.preventDefault();
     const obj = {
-      make,
+      selectedBrand,
       model,
       year,
       image,
@@ -131,7 +132,7 @@ function CreateCartS() {
   const [getModel, setGetModel] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [carValues, setCarValues] = useState([]);
-  console.log(Array.isArray(carValues));
+
   useEffect(() => {
     axios
       .get("http://16.171.243.1:8080/car-dealer/brand/getAllBrands")
@@ -158,8 +159,7 @@ function CreateCartS() {
     axios
       .get("http://16.171.243.1:8080/car-dealer/values/allCarValues")
       .then((res) => {
-        console.log(res.data.data);
-        setCarValues(res.data.data);
+        setCarValues(res.data.color);
       })
       .catch((err) => {
         console.error("Car valuelarini olishda xato:", err);
@@ -182,9 +182,7 @@ function CreateCartS() {
               className="w-[50%] outline-[#F0F2F5] p-4 text-gray-600 mt-2 rounded-lg bg-[#F0F2F5]"
               onChange={(e) => setSelectedBrand(e.target.value)}
             >
-              <option value="" disabled>
-                Choose a car
-              </option>
+              <option value="Choose a car">Choose a car</option>
               {getBrand.map((brand) => (
                 <option key={brand.id} value={brand.id}>
                   {brand.name}
@@ -201,9 +199,7 @@ function CreateCartS() {
               required
               className="w-[50%] outline-[#F0F2F5] p-4 text-gray-600 mt-2 rounded-lg bg-[#F0F2F5]"
             >
-              <option value="" disabled>
-                Choose a model
-              </option>
+              <option value="Choose a model">Choose a model</option>
               {getModel.length > 0 ? (
                 getModel.map((model) => (
                   <option key={model.id} value={model.id}>
@@ -215,7 +211,58 @@ function CreateCartS() {
               )}
             </select>
           </div>
+          {/* Body */}
+          <div className="mb-8">
+            <label className=" text-[15px] font-medium">Body</label>
+            <br />
+            <input
+              type="number"
+              className="bg-[#F0F2F5] outline-[#b2b3b4] w-[50%] mt-2 rounded-lg p-4"
+              placeholder="Enter price"
+            />
+          </div>
 
+          {/* Transmission */}
+          <div className="mb-8">
+            <label className=" text-[15px] font-medium">Transmission</label>
+            <br />
+            <input
+              type="text"
+              className="bg-[#F0F2F5] outline-[#b2b3b4] w-[50%] mt-2 rounded-lg p-4"
+              placeholder="Enter price"
+            />
+          </div>
+          {/* DriveType */}
+          <div className="mb-8">
+            <label className=" text-[15px] font-medium">Drive Type</label>
+            <br />
+            <input
+              type="text"
+              className="bg-[#F0F2F5] outline-[#b2b3b4] w-[50%] mt-2 rounded-lg p-4"
+              placeholder="Enter price"
+            />
+          </div>
+
+          {/* engine */}
+          <div className="mb-8">
+            <label className=" text-[15px] font-medium">Engine</label>
+            <br />
+            <input
+              type="number"
+              className="bg-[#F0F2F5] outline-[#b2b3b4] w-[50%] mt-2 rounded-lg p-4"
+              placeholder="Enter price"
+            />
+          </div>
+          {/* cylinder */}
+          <div className="mb-8">
+            <label className=" text-[15px] font-medium">Cylinder</label>
+            <br />
+            <input
+              type="number"
+              className="bg-[#F0F2F5] outline-[#b2b3b4] w-[50%] mt-2 rounded-lg p-4"
+              placeholder="Enter price"
+            />
+          </div>
           {/* Image */}
           <div className="mb-8">
             <label className=" text-[15px] font-medium">Images</label>
@@ -224,6 +271,7 @@ function CreateCartS() {
               type="text"
               className="mt-5 p-4 gap-5 rounded-xl w-[50%] bg-[#F0F2F5]"
               onChange={(e) => setImage(e.target.files)}
+              placeholder="Image..."
             />
           </div>
 
@@ -235,6 +283,7 @@ function CreateCartS() {
               type="number"
               className="bg-[#F0F2F5] outline-[#b2b3b4] w-[50%] mt-2 rounded-lg p-4"
               onClick={(e) => setYear(e.target.value)}
+              placeholder="Year..."
             />
           </div>
 
@@ -247,11 +296,7 @@ function CreateCartS() {
               className="w-[50%] outline-[#F0F2F5] p-4 text-gray-600 mt-2 rounded-lg bg-[#F0F2F5]"
               onChange={(e) => setColor(e.target.value)}
             >
-              <option
-                value="Choose the Color"
-                disabled
-                className="text-gray-200"
-              >
+              <option value="Choose the Color" className="text-gray-200">
                 Choose the Color
               </option>
               {Array.isArray(carValues) &&
@@ -279,6 +324,8 @@ function CreateCartS() {
             />
           </div>
 
+          {/*  */}
+
           {/* Mileage */}
           <div className="mb-8">
             <label className=" text-[15px] font-medium">Mileage</label>
@@ -292,15 +339,15 @@ function CreateCartS() {
           </div>
 
           {/* Fuel */}
-          {/* <div className="mb-8">
+          <div className="mb-8">
             <label className=" text-[15px] font-medium">Fuel</label>
             <br />
             <select
               className="w-[50%] outline-[#F0F2F5] p-4 text-gray-600 mt-2 rounded-lg bg-[#F0F2F5]"
               onChange={(e) => setFuel(e.target.value)}
             >
-              <option className="text-gray-200" disabled value="Choose">
-                Choose
+              <option className="text-gray-200" value="Choose Fuel">
+                Choose Fuel
               </option>
               {carValues &&
                 carValues.map((item, index) => (
@@ -313,8 +360,9 @@ function CreateCartS() {
                   </option>
                 ))}
             </select>
-          </div> */}
-          <div className="mb-8">
+          </div>
+          <CreatePage2 />
+          {/* <div className="mb-8">
             <label className="text-[15px] font-medium">Fuel</label>
             <br />
             <select
@@ -322,14 +370,11 @@ function CreateCartS() {
               onChange={(e) => setFuel(e.target.value)}
             >
               <option value="Choose">Choose</option>
-              {carValues &&
-                carValues.fuel.map((item, index) => (
-                  <option key={index} value={item} className="text-gray-200">
-                    {item}
-                  </option>
-                ))}
+              {carValues.map((item) => (
+                <option value={item.fuel}>{item.fuel}</option>
+              ))}
             </select>
-          </div>
+          </div> */}
           {/* Condition */}
           <div>
             <label className="text-[15px] font-medium">Condition</label>

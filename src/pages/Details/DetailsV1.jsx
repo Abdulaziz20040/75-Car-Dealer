@@ -16,8 +16,7 @@ import Icon from "./Icon.png";
 import DetailsPage from "./DetailsPage";
 import DetailsPage2 from "./DetailsPage2";
 import axios from "axios";
-import ListV1 from "../../Components/List/ListV1";
-import { Pagination, Select } from "antd";
+import { Pagination } from "antd";
 import { GoArrowUpRight } from "react-icons/go";
 import { LiaGasPumpSolid } from "react-icons/lia";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -28,6 +27,7 @@ const AnnouncementDetails = () => {
   const [error, setError] = useState(null);
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const [pageSize] = useState(12);
 
   useEffect(() => {
@@ -92,7 +92,6 @@ const AnnouncementDetails = () => {
   }
 
   const { car, description, price, savedBy, user } = apiResponse;
-
   // <div className=" mt-20">
   //   <h1>
   //     {apiResponse.car.brand.name} {apiResponse.car.model.name}
@@ -130,20 +129,30 @@ const AnnouncementDetails = () => {
         </div>
       </div>
       {/* Tags */}
-      <div className="flex space-x-4 mb-6">
-        <span className="flex justify-start items-center  gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
-          <FaCalendarAlt className="text-blue-500" /> {car.year}
-        </span>
-        <span className="flex justify-start items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
-          <MdOutlineSpeed className="text-blue-500" />{" "}
-          {car.mileage === 0 ? "soon" : car.mileage}
-        </span>
-        <span className="flex justify-start items-center  gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
-          <TbManualGearbox className="text-blue-500" /> {car.transmission}
-        </span>
-        <span className="flex justify-start items-center  gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
-          <BsFuelPump className="text-blue-500" /> {car.fuel}
-        </span>
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex space-x-4">
+          <span className="flex justify-start items-center  gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
+            <FaCalendarAlt className="text-blue-500" /> {car.year}
+          </span>
+          <span className="flex justify-start items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
+            <MdOutlineSpeed className="text-blue-500" />{" "}
+            {car.mileage === 0 ? "soon" : car.mileage}
+          </span>
+          <span className="flex justify-start items-center  gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
+            <TbManualGearbox className="text-blue-500" /> {car.transmission}
+          </span>
+          <span className="flex justify-start items-center  gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full">
+            <BsFuelPump className="text-blue-500" /> {car.fuel}
+          </span>
+        </div>
+        <div>
+          <button
+            onClick={() => navigate(`/editPage/${id}`)}
+            className="border-[1px] border-blue-500 text-blue-600 rounded-[9px] p-1 w-[100px]"
+          >
+            Edit
+          </button>
+        </div>
       </div>
       {/* Images Section */}
       <div className="gap-4 mb-6">

@@ -42,12 +42,24 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-semibold mb-4">Company</h4>
           <ul className="space-y-2 text-sm">
-            <li>About Us</li>
-            <li>Blog</li>
-            <li>Services</li>
-            <li>FAQs</li>
-            <li>Terms</li>
-            <li>Contact Us</li>
+            <li>
+              <a href="#">About Us</a>
+            </li>
+            <li>
+              <a href="#">Blog</a>
+            </li>
+            <li>
+              <a href="#">Services</a>
+            </li>
+            <li>
+              <a href="#">FAQs</a>
+            </li>
+            <li>
+              <a href="#">Terms</a>
+            </li>
+            <li>
+              <a href="#">Contact Us</a>
+            </li>
           </ul>
         </div>
 
@@ -55,10 +67,18 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-semibold mb-4">Quick Links</h4>
           <ul className="space-y-2 text-sm">
-            <li>Get in Touch</li>
-            <li>Help Center</li>
-            <li>Live Chat</li>
-            <li>How it works</li>
+            <li>
+              <a href="#">Get in Touch</a>
+            </li>
+            <li>
+              <a href="#">Help Center</a>
+            </li>
+            <li>
+              <a href="#">Live Chat</a>
+            </li>
+            <li>
+              <a href="#">How it works</a>
+            </li>
           </ul>
         </div>
 
@@ -66,14 +86,30 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-semibold mb-4">Our Brands</h4>
           <ul className="space-y-2 text-sm">
-            <li>Toyota</li>
-            <li>Porsche</li>
-            <li>Audi</li>
-            <li>BMW</li>
-            <li>Ford</li>
-            <li>Nissan</li>
-            <li>Peugeot</li>
-            <li>Volkswagen</li>
+            <li>
+              <a href="#">Toyota</a>
+            </li>
+            <li>
+              <a href="#">Porsche</a>
+            </li>
+            <li>
+              <a href="#">Audi</a>
+            </li>
+            <li>
+              <a href="#">BMW</a>
+            </li>
+            <li>
+              <a href="#">Ford</a>
+            </li>
+            <li>
+              <a href="#">Nissan</a>
+            </li>
+            <li>
+              <a href="#">Peugeot</a>
+            </li>
+            <li>
+              <a href="#">Volkswagen</a>
+            </li>
           </ul>
         </div>
 
@@ -81,14 +117,30 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-semibold mb-4">Vehicles Type</h4>
           <ul className="space-y-2 text-sm">
-            <li>Sedan</li>
-            <li>Hatchback</li>
-            <li>SUV</li>
-            <li>Hybrid</li>
-            <li>Electric</li>
-            <li>Coupe</li>
-            <li>Truck</li>
-            <li>Convertible</li>
+            <li>
+              <a href="#">Sedan</a>
+            </li>
+            <li>
+              <a href="#">Hatchback</a>
+            </li>
+            <li>
+              <a href="#">SUV</a>
+            </li>
+            <li>
+              <a href="#">Hybrid</a>
+            </li>
+            <li>
+              <a href="#">Electric</a>
+            </li>
+            <li>
+              <a href="#">Coupe</a>
+            </li>
+            <li>
+              <a href="#">Truck</a>
+            </li>
+            <li>
+              <a href="#">Convertible</a>
+            </li>
           </ul>
         </div>
 

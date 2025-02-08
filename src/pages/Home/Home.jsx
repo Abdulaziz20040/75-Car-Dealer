@@ -84,16 +84,24 @@ function HomePage() {
       desc: "Our stress-free finance department that can find financial solutions to save you money.",
     },
   ]);
+  const [apiResponse, setApiResponse] = useState(null);
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(12);
-  const [searchBrand, setSearchBrand] = useState([]);
-  const [searchModel, setSearchModel] = useState([]);
+  const [searchModel, setSearchModel] = useState("");
+  // /////////////
+  const [getBrand, setGetBrand] = useState([]);
+  const [getModel, setGetModel] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [searchPr, setSearchPr] = useState("");
 
-  useEffect(() => {
+  const handleSearch = () => {
+    const obj = {
+      getBrand,
+      selectedBrand,
+    };
     axios
-      .get("http://16.171.243.1:8080/car-dealer/list")
+      .post("http://16.171.243.1:8080/car-dealer/list/filter")
       .then((response) => {
         setCards(response.data);
         console.log("usecar", response.data); // Konsolda ma’lumotni tekshiring
@@ -101,8 +109,7 @@ function HomePage() {
       .catch((error) => {
         console.error("Error fetching data:", error.status);
       });
-  }, []);
-
+  };
   // http://16.171.243.1:8080/car-dealer/brand/getAllBrands
 
   const handlePageChange = (page) => {
@@ -118,12 +125,9 @@ function HomePage() {
     axios
       .get("http://16.171.243.1:8080/car-dealer/brand/getAllBrands")
       .then((res) => {
-        console.log(res.data);
-        setSearchBrand(res.data.data || []);
+        setGetBrand(res.data.data || []);
       })
-      .catch((err) => {
-        console.log(err.status, "Datada xatolik bor");
-      });
+      .catch((err) => console.error("Brandlarni olishda xato:", err));
   }, []);
 
   useEffect(() => {
@@ -133,16 +137,11 @@ function HomePage() {
           `http://16.171.243.1:8080/car-dealer/model/getAllModels/${selectedBrand}`
         )
         .then((res) => {
-          console.log(res.data.data);
-          setSearchModel(res.data.data || []);
+          setGetModel(res.data.data || []);
         })
-        .catch((err) => {
-          console.log(err.status, "Datada xatolik bor");
-        });
-    } else {
-      setSearchModel([]);
+        .catch((err) => console.error("Modellarni olishda xato:", err));
     }
-  }, [searchBrand]);
+  }, [selectedBrand]);
 
   const indexOfLastCard = currentPage * pageSize;
   const indexOfFirstCard = indexOfLastCard - pageSize;
@@ -151,12 +150,12 @@ function HomePage() {
   return (
     <>
       <div className="bgImg">
-        <div className="text-center text-white relative top-44 font">
+        <div className="text-center text-white relative top-28 font">
           <p className="font-medium">
             Find cars for sale and for rent near you
           </p>
           <h1 className="text-[52px] mt-3">Find Your Perfect Car</h1>
-          <div className="flex justify-center items-center my-8">
+          <form className="flex justify-center items-center my-8">
             <div className="bg-white w-[55%] h-[74px] p-10 rounded-[40px] flex justify-between items-center">
               <select
                 className="w-[17%] overflow-y-auto outline-none text-[14px] text-gray-600 p-2 rounded-lg bg-white"
@@ -165,22 +164,29 @@ function HomePage() {
                 <option className="text-gray-200" value="Any Makes">
                   Any Makes
                 </option>
-                {searchBrand.map((item) => (
-                  <option className="text-gray-200" value="Any Makes">
-                    {item.name}
+                {getBrand.map((brand) => (
+                  <option key={brand.id} value={brand.id}>
+                    {brand.name}
                   </option>
                 ))}
               </select>
               {/* Any Model */}
-              <select className="w-[17%] outline-none text-[14px] text-gray-600 p-2 rounded-lg bg-white">
+              <select
+                className="w-[17%] outline-none text-[14px] text-gray-600 p-2 rounded-lg bg-white"
+                onChange={(e) => setSearchModel(e.target.value)}
+              >
                 <option className="text-gray-200" value="Any Model">
                   Any Model
                 </option>
-                {searchModel.map((item) => (
-                  <option className="text-gray-200" value="Any Model">
-                    {item.name}
-                  </option>
-                ))}
+                {getModel.length > 0 ? (
+                  getModel.map((model) => (
+                    <option key={model.id} value={model.id}>
+                      {model.name}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>Hech qanday model topilmadi</option>
+                )}
               </select>
               {/* Price  */}
               <div>
@@ -190,6 +196,7 @@ function HomePage() {
                   </label>
                   <input
                     type="text"
+                    onChange={(e) => setSearchPr(e.target.value)}
                     id="price"
                     className="text-black w-[100px] bg-white outline-none p-2 placeholder:text-[14px] placeholder:text-black ms-2"
                     placeholder="All Prices"
@@ -197,13 +204,15 @@ function HomePage() {
                 </div>
               </div>
               {/* Search Cars */}
-              <div>
-                <button className="bg-[#405FF2] text-[14px] w-[110%] p-3 rounded-3xl">
-                  Search Cars
-                </button>
-              </div>
+              <Link to={`/listing/${getBrand.id}`}>
+                <div>
+                  <button className="bg-[#405FF2] text-[14px] w-[110%] p-3 rounded-3xl">
+                    Search Cars
+                  </button>
+                </div>
+              </Link>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <div className="bg-[#F9FBFC] pr-20 pb-28 ps-20">
@@ -213,7 +222,7 @@ function HomePage() {
               Explore Our Premium Brands
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 md:mx-auto lg:grid-cols-6 gap-3">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 md:mx-auto lg:grid-cols-6 gap-10">
             {preBrand.map((item) => (
               <div
                 className="text-center mb-4 mt-11 flex justify-center items-center border-[1.5px] bg-white lg:w-[200px] w-full h-[250px] rounded-lg lg:h-[150px]"
@@ -331,7 +340,7 @@ function HomePage() {
         </div>
 
         {/* Pagination */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex justify-center items-center">
           <Pagination
             current={currentPage}
             pageSize={pageSize}
@@ -341,9 +350,9 @@ function HomePage() {
         </div>
       </div>
       {/* Cards */}
-      <div className="flex flex-col md:flex-row items-center bg-gray-100 p-8 rounded-2xl mt-10">
-        {/* Left Section */}
-        <div className="w-full  md:w-1/2 relative">
+      {/* <div className="flex flex-col md:flex-row items-center bg-gray-100 p-8 rounded-2xl mt-10"> */}
+      {/* Left Section */}
+      {/* <div className="w-full  md:w-1/2 relative">
           <img
             src={cars2} // Replace with your image URL
             alt="Car on the road"
@@ -352,10 +361,10 @@ function HomePage() {
           <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black p-4 rounded-full shadow-lg focus:outline-none">
             ▶
           </button>
-        </div>
+        </div> */}
 
-        {/* Right Section */}
-        <div className="w-full md:w-1/2 mt-6 md:mt-0 md:pl-10">
+      {/* Right Section */}
+      {/* <div className="w-full md:w-1/2 mt-6 md:mt-0 md:pl-10">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Get A Fair Price For Your Car Sell To Us Today
           </h2>
@@ -386,8 +395,8 @@ function HomePage() {
           <button className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 focus:outline-none">
             Get Started →
           </button>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <div className="flex justify-center ">
         <div className="border-b-[1px] border-[#E1E1E1] mt-32 w-[90%]"></div>
       </div>
