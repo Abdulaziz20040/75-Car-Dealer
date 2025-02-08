@@ -64,7 +64,7 @@ const Shop = () => {
   };
 
   return (
-    <div className=" p-6 min-h-screen">
+    <div className="container mx-auto p-6 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">Shop</h1>
       <div className="flex  ">
         {/* Left Sidebar */}

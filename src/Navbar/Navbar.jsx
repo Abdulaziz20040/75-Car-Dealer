@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
-import { FaCaretDown } from "react-icons/fa";
 
 const { Option } = Select;
 
@@ -16,7 +15,6 @@ function Navbar() {
       setIsLoggedIn(true); // Login holatini yangilash
     }
   }, []);
-
   const navigate = useNavigate();
 
   // Handle category change
@@ -39,7 +37,7 @@ function Navbar() {
         </div>
 
         {/* Menu Items */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex items-center space-x-6">
           <Link to={"/Home-1"}>
             <h1>Home</h1>
           </Link>

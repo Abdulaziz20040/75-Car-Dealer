@@ -44,7 +44,7 @@ function About() {
     setActiveKeys(key);
   };
   return (
-    <div className=" container">
+    <div className=" container mx-auto">
       {/* Header Section */}
       <div className="bg-white py-20 flex gap-20 px-6">
         <h1 className="text-4xl font-extrabold ">

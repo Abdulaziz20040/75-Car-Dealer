@@ -37,7 +37,7 @@ function BlogV1() {
   const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
-    <div className="mt-14">
+    <div className="container mx-auto mt-14">
       <h1 className="text-2xl font-semibold">BlogV1</h1>
 
       {/* Select for changing page size */}

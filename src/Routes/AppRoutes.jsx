@@ -18,6 +18,7 @@ import CreateCartS from "../pages/CreateCart/CreateCartS";
 import Elon from "../pages/E_lon/E'lon";
 import ShoppCreate from "../pages/Shop/ShoppCreate";
 import CreateBlog from "../pages/Blog/CreateBlog";
+import EditPage from "../pages/Details/EditPage";
 
 const Router = createBrowserRouter([
   {
@@ -50,7 +51,10 @@ const Router = createBrowserRouter([
         path: "Listings",
         element: <ListV1 />,
       },
-
+      {
+        path: "Listings/:id",
+        element: <ListV1 />,
+      },
       // Blog
 
       {
@@ -130,6 +134,10 @@ const Router = createBrowserRouter([
       {
         path: "createBlog",
         element: <CreateBlog />,
+      },
+      {
+        path: "editPage/:id",
+        element: <EditPage />,
       },
     ],
   },
