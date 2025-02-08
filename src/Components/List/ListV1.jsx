@@ -69,15 +69,15 @@ function ListV1() {
         </div>
 
         {/* cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 mt-6">
+        <div className="grid grid-cols-1 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
           {cards.data &&
             cards.data.Announcement.map((card) => (
               <div
                 key={card.id}
                 className="relative w-[300px] bg-white rounded-xl shadow-md flex flex-col"
               >
-                <div className="absolute top-4 flex justify-between w-full px-4">
-                  <button className="bg-green-600 text-white text-sm font-medium px-2 py-1 rounded-full shadow">
+                <div className="absolute flex justify-between w-full px-4 top-4">
+                  <button className="px-2 py-1 text-sm font-medium text-white bg-green-600 rounded-full shadow">
                     {card.attribute || "Great Price"}
                   </button>
                   <button className="bg-white rounded-full w-[30px] h-[30px] flex items-center justify-center shadow">
@@ -88,15 +88,15 @@ function ListV1() {
                   <img
                     src={card.imageUrl || "https://via.placeholder.com/300"}
                     alt={`${card.brand} ${card.model}`}
-                    className="w-full h-40 object-cover rounded-t-xl mb-4"
+                    className="object-cover w-full h-40 mb-4 rounded-t-xl"
                   />
                 </Link>
 
                 <div className="px-5 pb-5">
-                  <h2 className="text-lg font-semibold mb-1 line-clamp-1">
+                  <h2 className="mb-1 text-lg font-semibold line-clamp-1">
                     {`${card.brand} ${card.model}`}
                   </h2>
-                  <p className="text-gray-600 mb-2 line-clamp-1">
+                  <p className="mb-2 text-gray-600 line-clamp-1">
                     {new Date(card.date)
                       .toLocaleString("uz-UZ", {
                         day: "numeric",
@@ -107,7 +107,7 @@ function ListV1() {
 
                   <hr className="my-2" />
 
-                  <div className="flex justify-between text-sm text-gray-700 mb-2">
+                  <div className="flex justify-between mb-2 text-sm text-gray-700">
                     <button className="flex flex-col items-center justify-center">
                       <MdOutlineSpeed className="text-xl" />
                       <span>{card.millage || "N/A"} Miles</span>
@@ -126,12 +126,12 @@ function ListV1() {
 
                   <hr className="my-2" />
 
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-700 font-semibold">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-gray-700">
                       ${card.price || "0.00"}
                     </span>
                     <Link to={`/details/${card.announcementId}`}>
-                      <button className="text-blue-500 flex items-center gap-1 hover:underline">
+                      <button className="flex items-center gap-1 text-blue-500 hover:underline">
                         View Details
                         <GoArrowUpRight className="text-xl" />
                       </button>
@@ -143,7 +143,7 @@ function ListV1() {
         </div>
 
         {/* Pagination */}
-        <div className="mt-6 flex justify-center">
+        <div className="flex justify-center mt-6">
           <Pagination
             current={currentPage}
             pageSize={pageSize}
@@ -158,3 +158,4 @@ function ListV1() {
 }
 
 export default ListV1;
+// listV1
