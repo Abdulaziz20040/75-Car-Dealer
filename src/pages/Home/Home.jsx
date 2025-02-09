@@ -24,6 +24,7 @@ import { TbManualGearbox } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { GoArrowUpRight } from "react-icons/go";
 import HomePage4 from "./HomePage4";
+import BrandSlider from "../Allbrends";
 
 function HomePage() {
   const [preBrand, setPreBrand] = useState([
@@ -216,39 +217,14 @@ function HomePage() {
         </div>
       </div>
       <div className="bg-[#F9FBFC] pr-20 pb-28 ps-20">
-        <div className="container mx-auto">
-          <div className="text-start pt-20">
-            <h2 className="text-[35px] font-medium">
-              Explore Our Premium Brands
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 md:mx-auto lg:grid-cols-6 gap-10">
-            {preBrand.map((item) => (
-              <div
-                className="text-center mb-4 mt-11 flex justify-center items-center border-[1.5px] bg-white lg:w-[200px] w-full h-[250px] rounded-lg lg:h-[150px]"
-                key={item.id}
-              >
-                <div>
-                  <div className="flex justify-center">
-                    <img
-                      src={item.imgs}
-                      alt={item.name}
-                      className="w-[75px] h-[75px]"
-                    />
-                  </div>
-                  <h3>{item.name}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <div className="container mx-auto">{/* <BrandSlider /> */}</div>
       </div>
       {/* Cards */}
       <div className="container mx-auto mt-24 mb-28">
         {/* ListV1 cards */}
         <div className="flex items-center justify-between">
           <p>
-            Showing {indexOfFirstCard + 1} –{" "}
+            Showing {indexOfFirstCard + 1}
             {Math.min(indexOfLastCard, cards.length)} of {cards.length} results
           </p>
           <div className="flex items-center gap-4">
