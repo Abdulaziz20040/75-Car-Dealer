@@ -21,7 +21,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { MdOutlineSpeed } from "react-icons/md";
 import { LiaGasPumpSolid } from "react-icons/lia";
 import { TbManualGearbox } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { GoArrowUpRight } from "react-icons/go";
 import HomePage4 from "./HomePage4";
 
@@ -84,7 +84,6 @@ function HomePage() {
       desc: "Our stress-free finance department that can find financial solutions to save you money.",
     },
   ]);
-  const [apiResponse, setApiResponse] = useState(null);
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(12);
@@ -94,22 +93,8 @@ function HomePage() {
   const [getModel, setGetModel] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [searchPr, setSearchPr] = useState("");
+  const navigate = useNavigate();
 
-  const handleSearch = () => {
-    const obj = {
-      getBrand,
-      selectedBrand,
-    };
-    axios
-      .post("http://16.171.243.1:8080/car-dealer/list/filter")
-      .then((response) => {
-        setCards(response.data);
-        console.log("usecar", response.data); // Konsolda ma’lumotni tekshiring
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error.status);
-      });
-  };
   // http://16.171.243.1:8080/car-dealer/brand/getAllBrands
 
   const handlePageChange = (page) => {
@@ -143,9 +128,77 @@ function HomePage() {
     }
   }, [selectedBrand]);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const obj = {
+      brand: selectedBrand,
+      model: searchModel,
+      fromMileage: null,
+      toMileage: null,
+      fromPrice: null,
+      toPrice: null,
+      condition: null,
+      transmission: null,
+      fuel: null,
+    };
+    navigate(`/searchPage/${selectedBrand}`);
+    axios
+      .post("http://10.10.3.9:8080/car-dealer/list/filter", obj)
+      .then((response) => {
+        setCards(response.data);
+        console.log("usecar:", response.data); // Ma'lumotni konsolda tekshirish
+      })
+      .catch((error) => {
+        console.error(
+          "Error fetching data:",
+          error.response?.status || error.message
+        );
+      });
+  };
+
+  // <Link to={`/details/${item.id}`}>
+  //   <img
+  //     src={item.img}
+  //     alt={item.title}
+  //     className="w-full h-40 object-contain mb-4"
+  //   />
+  // </Link>;
+  // ___________________________;
+  // onclik ulash
+  {
+    /* <Route path="details/:id" element={<Details />} /> */
+  }
+  // ___________________________;
+  // router sozlash
+  // ___________________________;
+  // const { id } = useParams();
+  // const [item, setitem] = useState(null);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://0c7d0caa3768a5b0.mokky.dev/Teplodom/${id}`)
+  //     .then((res) => {
+  //       setitem(res.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       setLoading(false);
+  //     });
+  // }, [id]);
+
+  // if (loading) {
+  //   return <p>Yuklanmoqda...</p>;
+  // }
+
+  // ___________________________;
+  // useParams ni choqirish apidan malumotlni id orqali olish
+  //  usestateda lodaing yozish
+  // ifda tekchisirsh loadingni'
+
   const indexOfLastCard = currentPage * pageSize;
   const indexOfFirstCard = indexOfLastCard - pageSize;
-  // const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
 
   return (
     <>
@@ -155,7 +208,10 @@ function HomePage() {
             Find cars for sale and for rent near you
           </p>
           <h1 className="text-[52px] mt-3">Find Your Perfect Car</h1>
-          <form className="flex justify-center items-center my-8">
+          <form
+            className="flex justify-center items-center my-8"
+            onSubmit={handleSearch}
+          >
             <div className="bg-white w-[55%] h-[74px] p-10 rounded-[40px] flex justify-between items-center">
               <select
                 className="w-[17%] overflow-y-auto outline-none text-[14px] text-gray-600 p-2 rounded-lg bg-white"
@@ -204,13 +260,11 @@ function HomePage() {
                 </div>
               </div>
               {/* Search Cars */}
-              <Link to={`/listing/${getBrand.id}`}>
-                <div>
-                  <button className="bg-[#405FF2] text-[14px] w-[110%] p-3 rounded-3xl">
-                    Search Cars
-                  </button>
-                </div>
-              </Link>
+              <div>
+                <button className="bg-[#405FF2] text-[14px] w-[110%] p-3 rounded-3xl">
+                  Search Cars
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -350,7 +404,6 @@ function HomePage() {
         </div>
       </div>
       {/* Cards */}
-      {/* <div className="flex flex-col md:flex-row items-center bg-gray-100 p-8 rounded-2xl mt-10"> */}
       {/* Left Section */}
       {/* <div className="w-full  md:w-1/2 relative">
           <img

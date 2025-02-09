@@ -5,7 +5,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { MdOutlineSpeed } from "react-icons/md";
 import { LiaGasPumpSolid } from "react-icons/lia";
 import { Pagination, Select } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { TbManualGearbox } from "react-icons/tb";
 
 const { Option } = Select;
@@ -141,7 +141,6 @@ function ListV1() {
               </div>
             ))}
         </div>
-
         {/* Pagination */}
         <div className="mt-6 flex justify-center">
           <Pagination
