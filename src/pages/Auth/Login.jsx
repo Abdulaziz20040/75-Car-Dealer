@@ -3,91 +3,114 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
-
+  const [verificationCode, setVerificationCode] = useState("");
   const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsRegister(!isRegister);
     setError("");
-    setEmail("");
-    setPassword("");
-    setFirstName("");
-    setLastName("");
-    setPhone("");
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phone: "",
+    });
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    if (!firstName || !lastName || !email || !password || !phone) {
+    const { firstName, lastName, email, password, phone } = formData;
+
+    if (!firstName || !lastName || !email || !password) {
       setError("Ro‘yxatdan o‘tish uchun barcha maydonlarni to‘ldiring.");
       return;
     }
-
-    const userData = { firstName, lastName, email, password, phone };
-    console.log("Ro‘yxatdan o‘tish ma’lumotlari:", userData);
 
     try {
       const response = await fetch("http://16.171.243.1:8080/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-      console.log("Ro‘yxatdan o‘tish javobi:", data);
-
-      if (response === 201) {
-        localStorage.setItem("authToken", data?.data);
-        localStorage.setItem("email", email);
-        localStorage.setItem("lastName", lastName);
-        localStorage.setItem("firstName", firstName);
-        localStorage.setItem("phone", phone);
-        alert("Ro‘yxatdan o‘tish muvaffaqiyatli!");
+      if (response.status === 201) {
+        alert("Foydalanuvchi yaratildi (tasdiqlash kutilmoqda).");
         setOpen(true);
       } else {
         setError(data.message || "Ro‘yxatdan o‘tishda xatolik.");
       }
-    } catch (error) {
+    } catch {
+      setError("Server bilan bog‘lanishda xatolik yuz berdi.");
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    if (!verificationCode) {
+      setError("Iltimos, tasdiqlash kodini kiriting.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://16.171.243.1:8080/auth/confirm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email, code: verificationCode }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Tasdiqlash muvaffaqiyatli bajarildi! Endi tizimga kiring.");
+        setOpen(false);
+        setIsRegister(false);
+      } else {
+        setError(data.message || "Tasdiqlashda xatolik yuz berdi.");
+      }
+    } catch {
       setError("Server bilan bog‘lanishda xatolik yuz berdi.");
     }
   };
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
+    const { email, password } = formData;
+
     if (!email || !password) {
       alert("Iltimos, email va parolni kiriting.");
       return;
     }
 
-    const loginData = { email, password };
-    console.log("Login ma’lumotlari:", loginData);
-
     try {
       const response = await fetch("http://16.171.243.1:8080/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
-      console.log("Login javobi:", data.data);
-
       if (response.ok) {
         localStorage.setItem("authToken", data?.data);
         alert("Login muvaffaqiyatli bajarildi!");
         navigate(-1);
       } else {
-        alert(data.message || "Login muvaffaqiyatsiz.");
+        alert(data.message || "Login muvaffiyatsiz.");
       }
-    } catch (error) {
+    } catch {
       alert("Server bilan bog‘lanishda xatolik yuz berdi.");
     }
   };
@@ -96,10 +119,24 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
         {open ? (
-          <>
-            Kodni kiriting:
-            <input type="text" className="w-full px-4 py-2 border rounded-lg" />
-          </>
+          <div>
+            <p className="mb-4">
+              Foydalanuvchi yaratildi (tasdiqlash kutilmoqda).
+            </p>
+            <input
+              type="text"
+              placeholder="Gmailga kelgan kodni kiriting"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg mb-4"
+            />
+            <button
+              onClick={handleVerifyCode}
+              className="w-full bg-blue-600 text-white py-2 rounded-lg"
+            >
+              Tasdiqlash
+            </button>
+          </div>
         ) : (
           <>
             <div className="flex gap-3 mb-6">
@@ -124,74 +161,62 @@ const Login = () => {
                 Ro‘yxatdan o‘tish
               </button>
             </div>
-            {isRegister ? (
-              <form onSubmit={handleSubmitRegister}>
+            <form
+              onSubmit={isRegister ? handleSubmitRegister : handleSubmitLogin}
+            >
+              {isRegister && (
+                <>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="Ismingiz"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full mb-4 px-4 py-2 border rounded-lg"
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Familiyangiz"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full mb-4 px-4 py-2 border rounded-lg"
+                  />
+                </>
+              )}
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full mb-4 px-4 py-2 border rounded-lg"
+              />
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Parol"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-lg mb-4"
+              />
+              {isRegister && (
                 <input
                   type="text"
-                  placeholder="Ismingiz"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
+                  name="phone"
+                  placeholder="Telefon raqam"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg"
                 />
-                <input
-                  type="text"
-                  placeholder="Familiyangiz"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
-                />
-                <input
-                  type="password"
-                  placeholder="Parol"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
-                />
-                <input
-                  type="text"
-                  placeholder="Telefon"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-2"
-                >
-                  Ro‘yxatdan o‘tish
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleSubmitLogin}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
-                />
-                <input
-                  type="password"
-                  placeholder="Parol"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full mb-4 px-4 py-2 border rounded-lg"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-2"
-                >
-                  Kirish
-                </button>
-              </form>
-            )}
+              )}
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 rounded-lg"
+              >
+                {isRegister ? "Ro‘yxatdan o‘tish" : "Kirish"}
+              </button>
+            </form>
           </>
         )}
         {error && <p className="text-red-500 mt-4">{error}</p>}
