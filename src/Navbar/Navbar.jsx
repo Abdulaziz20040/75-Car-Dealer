@@ -10,8 +10,8 @@ function Navbar() {
 
   // LocalStorage'dan emailni o'qish
   useEffect(() => {
-    const storedEmail = localStorage.getItem("email");
-    if (storedEmail) {
+    const storageauthToken = localStorage.getItem("authToken");
+    if (storageauthToken) {
       setIsLoggedIn(true); // Login holatini yangilash
     }
   }, []);
